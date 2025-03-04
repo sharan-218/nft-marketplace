@@ -2,7 +2,8 @@ import { SupportedWallet, WalletId, WalletManager, WalletProvider } from '@txnla
 import { SnackbarProvider } from 'notistack'
 import Home from './Home'
 import { getAlgodConfigFromViteEnvironment, getKmdConfigFromViteEnvironment } from './utils/network/getAlgoClientConfigs'
-
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import MyNFTs from './components/mynfts/MyNFTs'
 let supportedWallets: SupportedWallet[]
 if (import.meta.env.VITE_ALGOD_NETWORK === 'localnet') {
   const kmdConfig = getKmdConfigFromViteEnvironment()
@@ -49,7 +50,15 @@ export default function App() {
   return (
     <SnackbarProvider maxSnack={3}>
       <WalletProvider manager={walletManager}>
-        <Home />
+        {/* <Home /> */}
+        <Router>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/mynfts" element={<MyNFTs />} />
+            {/* <Route path="/profile" element={<Profile />} /> */}
+            <Route path="*" element={<h1 className="text-center mt-10">404 - Page Not Found</h1>} />
+          </Routes>
+        </Router>
       </WalletProvider>
     </SnackbarProvider>
   )
